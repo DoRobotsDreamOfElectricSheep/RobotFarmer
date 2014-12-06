@@ -1,4 +1,7 @@
 $(function () {
+
+    var teacher = Teacher.Create();
+
     $('#run').click(function () {
         var codeToRun = $('#editor').val();
         try {

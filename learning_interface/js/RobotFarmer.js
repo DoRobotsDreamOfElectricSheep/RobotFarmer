@@ -11,13 +11,13 @@ var robotFarmer = (function () {
     
     function ConsoleMessage(message, type) {
         if (type === 'sent') {
-            $console.append('[' + GetFormattedCurrentTime() + '] Message Sent: ' + message + '</br>');
+            console.log('[' + GetFormattedCurrentTime() + '] Message Sent: ' + message);
         }
         if (type === 'senderror') {
-            $console.append('[' + GetFormattedCurrentTime() + '] Send Error: ' + message + '</br>');
+            console.log('[' + GetFormattedCurrentTime() + '] Send Error: ' + message);
         }
         else {
-            $console.append('[' + GetFormattedCurrentTime() + '] ' + message + '</br>');
+            console.log('[' + GetFormattedCurrentTime() + '] ' + message);
         }
     }
 
@@ -38,7 +38,7 @@ var robotFarmer = (function () {
             contentType: "application/json; charset=utf-8",
             data: messageToSend,
             dataType: 'json',
-            success: function() { $console.append(displayMessage, 'sent'); },
+            success: function () { console.log(displayMessage, 'sent'); },
             error: HandleAjaxError
         })
     }
@@ -49,7 +49,7 @@ var robotFarmer = (function () {
             ConsoleMessage("Robot Farmer Created!");
             return {
                 lightsOn: function () { PostMessage("{sender: 'student', message: 'lightsOn'}", 'lights on') },
-                status: function () { alert(status.lightsOn); }
+                status: function () { console.log(status.lightsOn); }
             };
         }
         else {
