@@ -7,7 +7,7 @@ $(function () {
         try {
             eval(codeToRun);
         } catch (err) {
-            alert(err);
+            console.log(err);
         }
     });
 });

@@ -18,15 +18,15 @@ var Teacher = (function () {
 
     function ResetOverrides() {
         robotFarmer = originalRobotFarmer;
-        robotFarmer.create = originalRobotFarmerFuntions.create;
+        robotFarmer.create = originalRobotFarmerFunctions.Create;
     }
 
     function StartLesson1() {
-        var originalCreate = robotFarmer.create;
-
         robotFarmer.create = function () {
-            originalCreate();
+            var rf = originalRobotFarmerFunctions.Create();
             console.log("Lesson1 Complete");
+            ResetOverrides();
+            return rf;
         };
     }
 
