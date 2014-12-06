@@ -1,7 +1,7 @@
 var robotFarmer = (function () {
 
     var created = false,
-        serverUrl = "localhost:9000",
+        serverUrl = "http://localhost:9000",
         $console = $('#console-output');
 
     var status = {
@@ -13,6 +13,9 @@ var robotFarmer = (function () {
         if (type === 'sent') {
             $console.append('[' + GetFormattedCurrentTime() + '] Message Sent: ' + message + '</br>');
         }
+        if (type === 'senderror') {
+            $console.append('[' + GetFormattedCurrentTime() + '] Send Error: ' + message + '</br>');
+        }
         else {
             $console.append('[' + GetFormattedCurrentTime() + '] ' + message + '</br>');
         }
@@ -23,13 +26,20 @@ var robotFarmer = (function () {
         return time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
     }
 
+    function HandleAjaxError(jqXHR, textStatus, errorThrown) {
+        var errorMessage = errorThrown.message ? errorThrown.message : textStatus;
+        ConsoleMessage(errorMessage, 'senderror');
+    }
+
     function PostMessage(messageToSend, displayMessage) {
         $.ajax({
-            type: 'POST',
+            type: 'GET',
             url: serverUrl,
+            contentType: "application/json; charset=utf-8",
             data: messageToSend,
+            dataType: 'json',
             success: function() { $console.append(displayMessage, 'sent'); },
-            error: function(jqXHR,textStatus,errorThrown) { $console.append(errorThrown); }
+            error: HandleAjaxError
         })
     }
 
@@ -38,7 +48,7 @@ var robotFarmer = (function () {
             created = true;
             ConsoleMessage("Robot Farmer Created!");
             return {
-                lightsOn: PostMessage("{sender: 'student', message: 'lightsOn'}", 'lights on'),
+                lightsOn: function () { PostMessage("{sender: 'student', message: 'lightsOn'}", 'lights on') },
                 status: function () { alert(status.lightsOn); }
             };
         }
