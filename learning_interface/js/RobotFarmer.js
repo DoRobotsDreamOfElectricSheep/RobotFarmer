@@ -11,10 +11,10 @@ var robotFarmer = (function () {
     
     function ConsoleMessage(message, type) {
         if (type === 'sent') {
-            $console.append('Message Sent: ' + message + ' @' + GetFormattedCurrentTime() + '</br>');
+            $console.append('[' + GetFormattedCurrentTime() + '] Message Sent: ' + message + '</br>');
         }
         else {
-            $console.append(message + ' @' + GetFormattedCurrentTime() + '</br>');
+            $console.append('[' + GetFormattedCurrentTime() + '] ' + message + '</br>');
         }
     }
 
@@ -34,12 +34,17 @@ var robotFarmer = (function () {
     }
 
     function CreateRobotFarmer() {
-
-        ConsoleMessage("Robot Farmer Created!");
-        return {
-            lightsOn: PostMessage("{sender: 'student', message: 'lightsOn'}", 'lights on'),
-            status: function () { alert(status.lightsOn); }
-        };
+        if (!created) {
+            created = true;
+            ConsoleMessage("Robot Farmer Created!");
+            return {
+                lightsOn: PostMessage("{sender: 'student', message: 'lightsOn'}", 'lights on'),
+                status: function () { alert(status.lightsOn); }
+            };
+        }
+        else {
+            ConsoleMessage("Can't create Robot Farmer, already created");
+        }
     }
 
     return {

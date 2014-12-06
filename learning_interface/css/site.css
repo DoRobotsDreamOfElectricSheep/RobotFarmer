@@ -723,6 +723,7 @@ body {
 #console-output {
   background: orange;
   height: 500px;
+  overflow-y: auto;
 }
 #instructor {
   background: blue;
