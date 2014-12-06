@@ -1,15 +1,23 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+}
+
 #roadmap {
     background: yellow;
-    width: 18%;
+    width: 14%;
 }
     #progress {
         background-color: cyan;
-        height: 1010px; 
     }
 
 #main {
     background: purple;
-    width: 48%;
+    position: relative;
+    width: 55%;
 }
 
 #console {
@@ -19,11 +27,12 @@
 
 .col {
     float: left;
-    padding: .5% .5% 0 .5%;
+    height: 100%;
+    padding:0 10px;
 }
 
 .col > div, .col > ul {
-    margin: 0 auto 10px;
+    margin: 10px auto;
 }
 
 #camera {
@@ -39,10 +48,18 @@
 
 #instructor {
     background: blue;
-    height: 270px;
+    height: 40%;
 }
 
 #editor {
     background-color: black;
     color: lime;
+    height: 55%;
+    width: 99.5%;
+}
+
+#run {
+    bottom: 0px;
+    position: absolute;
+    right: 10px;
 }

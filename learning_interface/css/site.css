@@ -683,17 +683,24 @@ textarea {
     page-break-after: avoid;
   }
 }
+html,
+body {
+  height: 100%;
+}
+body {
+  display: flex;
+}
 #roadmap {
   background: yellow;
-  width: 18%;
+  width: 14%;
 }
 #progress {
   background-color: cyan;
-  height: 1010px;
 }
 #main {
   background: purple;
-  width: 48%;
+  position: relative;
+  width: 55%;
 }
 #console {
   background: green;
@@ -701,11 +708,12 @@ textarea {
 }
 .col {
   float: left;
-  padding: .5% .5% 0 .5%;
+  height: 100%;
+  padding: 0 10px;
 }
 .col > div,
 .col > ul {
-  margin: 0 auto 10px;
+  margin: 10px auto;
 }
 #camera {
   background: red;
@@ -718,11 +726,18 @@ textarea {
 }
 #instructor {
   background: blue;
-  height: 270px;
+  height: 40%;
 }
 #editor {
   background-color: black;
   color: lime;
+  height: 55%;
+  width: 99.5%;
+}
+#run {
+  bottom: 0px;
+  position: absolute;
+  right: 10px;
 }
 .btn {
   background: #3498db;
@@ -735,7 +750,6 @@ textarea {
   -moz-border-radius: 28;
   border-radius: 28px;
   color: #ffffff;
-  float: right;
   font-family: Arial;
   font-size: 14px;
   padding: 6px 18px 6px 18px;
