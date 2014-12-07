@@ -1,14 +1,45 @@
 var http = require('http');
+var request = require('request');
 var pythonShell = require('python-shell');
 
 var server = http.createServer(function(req, res) {
-	var message = 'takepicture';
 	
-	if(message === 'takepicture') {
-		TakePicture();
-	}
+	var command = '';
+	var post;
 
-	res.end('NodeJs running on Raspberry Pi');
+	if(req.method == 'POST') {
+		var body = ' ';
+		req.on('data', function(data) {
+			body += data;
+			console.log("BODY: " + body);
+		});
+		req.on('end', function() {
+			post = JSON.parse(body);
+			command = post.cmd.toLowerCase();
+			console.log("COMMAND: " + command);
+
+			if(command == 'takepicture') {
+				TakePicture();
+				var jsonBody = {
+					'id' : 'rasppi',
+					'cmd' : 'picturetaken',
+					'data' : {}
+				};
+				PostMessage(jsonBody, 'http://192.168.1.2:3000');
+				console.log('POST: picture taken');
+			}
+
+			if(command == 'lightson') {
+				//TODO; turn lights on
+			}
+
+			if(command == 'lightsoff') {
+				//TODO; turn lights off
+			}
+
+		});
+
+	res.end('message recieved');
 	console.log("Server visited");
 });
 
@@ -22,14 +53,14 @@ function TakePicture() {
 	});
 }
 
-function TurnLightsOn() {
-	//Stub
-}
-
-function TurnWaterOn() {
-	//Stub
-}
-
-function Move(x,y) {
-	//Stub
+function PostMessage(jsonBody, endpoint) {
+	request.post(
+			endpoint,
+			{ json: jsonBody },
+			function (error, response, body) {
+				if(!error && response.statusCode == 200) {
+					console.log(body);
+				}
+			}
+		);
 }
