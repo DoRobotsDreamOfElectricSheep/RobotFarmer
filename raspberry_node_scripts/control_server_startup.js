@@ -21,3 +21,15 @@ function TakePicture() {
 		if(err) console.log('capture error');
 	});
 }
+
+function TurnLightsOn() {
+	//Stub
+}
+
+function TurnWaterOn() {
+	//Stub
+}
+
+function Move(x,y) {
+	//Stub
+}
