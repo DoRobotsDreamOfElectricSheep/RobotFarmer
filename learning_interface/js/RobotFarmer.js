@@ -1,7 +1,6 @@
 var robotFarmer = (function () {
 
-    var created = false,
-        serverUrl = "http://localhost:9000",
+    var serverUrl = "http://localhost:9000",
         $console = $('#console-output');
 
     var status = {
@@ -44,17 +43,11 @@ var robotFarmer = (function () {
     }
 
     function CreateRobotFarmer() {
-        if (!created) {
-            created = true;
-            ConsoleMessage("Robot Farmer Created!");
-            return {
-                lightsOn: function () { PostMessage("{sender: 'student', message: 'lightsOn'}", 'lights on') },
-                status: function () { console.log(status.lightsOn); }
-            };
-        }
-        else {
-            ConsoleMessage("Can't create Robot Farmer, already created");
-        }
+        ConsoleMessage("Robot Farmer Created!");
+        return {
+            lightsOn: function () { PostMessage("{sender: 'student', message: 'lightsOn'}", 'lights on') },
+            status: function () { console.log(status.lightsOn); }
+        };
     }
 
     return {

@@ -12,7 +12,10 @@ var Teacher = (function () {
         console.log = function (message) { $console.append(message + '</br>') }
 
         return {
-            Lesson1: StartLesson1
+            //Create RobotFarmer
+            Lesson1: CreateRobotLesson,
+            //Turn Lights On
+            Lesson2: LightsOnLesson
         }
     }
 
@@ -21,12 +24,27 @@ var Teacher = (function () {
         robotFarmer.create = originalRobotFarmerFunctions.Create;
     }
 
-    function StartLesson1() {
+    function CreateRobotLesson() {
         robotFarmer.create = function () {
-            var rf = originalRobotFarmerFunctions.Create();
+            var shimmedRobotFarmer = originalRobotFarmerFunctions.Create();
             console.log("Lesson1 Complete");
             ResetOverrides();
-            return rf;
+            return shimmedRobotFarmer;
+        };
+    }
+    
+    function LightsOnLesson() {
+        var shimmedRobotFarmer;
+        robotFarmer.create = function () {
+            shimmedRobotFarmer = originalRobotFarmerFunctions.Create();
+            var originalLightsOn = shimmedRobotFarmer.lightsOn;
+            shimmedRobotFarmer.lightsOn = function () {
+                originalLightsOn();
+                console.log("Lesson2 Complete");
+                ResetOverrides();
+            };
+            
+            return shimmedRobotFarmer;
         };
     }
 

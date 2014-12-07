@@ -1,6 +1,6 @@
 $(function () {
     var teacher = Teacher.Create();
-    teacher.Lesson1();
+    teacher.Lesson2();
 
     $('#run').click(function () {
         var codeToRun = $('#editor').val();
