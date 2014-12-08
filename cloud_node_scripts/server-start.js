@@ -6,10 +6,16 @@ var qs = require('querystring');
 
 var raspPiEndpoint = 'http://192.168.1.3:4000';
 var selectedColor;
+var latestImageName;
 
 var server = http.createServer(function(req, res) {
+	res.writeHead(200,{'Access-Control-Allow-Origin':'*', 'Content-Type':'text/plain'});
+	//res.header('Access-Control-Allow-Origin', 'GET,PUT,POST,DELETE');
+	//res.header('Access-Control-Allow-Origin', 'Content-Type, Authorization');
+
 	var command = '';
 	var post;
+
 
 	if(req.method == 'POST') {
 		var body = ' ';
@@ -32,12 +38,27 @@ var server = http.createServer(function(req, res) {
 				console.log("COLOR SET TO: " + selectedColor);
 			}
 
-			if(command == 'picturetaken') {
-				/*downloadImage('http://192.168.1.3:8080/arm_image.jpg', 'pic_from_pi.jpg', function() {
+			if(command == 'takepicture') {
+				var jsonBody = { 
+					'id' : 'farmerserver',
+					'cmd' : 'takepicture',
+					'data' : {}
+				};
+				console.log("sending take picture cmd to PI");
+				console.log(jsonBody);
+				PostMessage(jsonBody, raspPiEndpoint);
+			}
+
+
+			if(command == 'capturecomplete') {
+				latestImageName = 'capture_' + Date.now() + '.jpg';
+				console.log('download image ' + latestImageName + ' ...');
+				downloadImage('http://192.168.1.3:8080/arm_image.jpg', 'pi_pictures/' + latestImageName, function() {
 					console.log('done');
-				});*/
-				console.log("pocessing image now...");
-				image.processImage('strawberry_initial.jpg', selectedColor);
+					console.log("pocessing image now...");
+					//image.processImage('strawberry_initial.jpg', selectedColor);
+				});
+				
 				//TODO: process picture, generate instructions and send back
 			}
 
@@ -61,10 +82,14 @@ var server = http.createServer(function(req, res) {
 
 				PostMessage(jsonBody, raspPiEndpoint);
 			}
+
+			if(command == 'cameraimageurl') {
+				res.end('http://192.168.1.2:8080/' + latestImageName);
+			}
 		});
 	}
 
-	res.end("message recieved");
+	//res.end("message recieved");
 	
 });
 
