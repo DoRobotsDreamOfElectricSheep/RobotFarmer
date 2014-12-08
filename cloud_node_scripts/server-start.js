@@ -71,20 +71,20 @@ var server = http.createServer(function(req, res) {
 				switch(post.data.control) {
 					case 'water_status': status.waterOn = post.data.value;
 										 break;
-					case 'light_status': status.lightson = post.data.value;
+					case 'light_status': status.lightOn = post.data.value;
 										 break;
 					default: console.log('invalid control status');
 				}
 			}
 
 			if(command == 'status') {
-				res.end(status);
+				res.end(JSON.stringify(status));
+			}
+			else {
+				res.end('SUCCESS 200');
 			}
 		});
 	}
-
-	//res.end("message recieved");
-	
 });
 
 server.listen(3000, '0.0.0.0');
