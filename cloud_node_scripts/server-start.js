@@ -4,7 +4,7 @@ var fs = require('fs');
 var request = require('request');
 var qs = require('querystring');
 
-var raspPiEndpoint = "192.168.1.3:4000";
+var raspPiEndpoint = 'http://192.168.1.3:4000';
 var selectedColor;
 
 var server = http.createServer(function(req, res) {
@@ -41,20 +41,21 @@ var server = http.createServer(function(req, res) {
 				//TODO: process picture, generate instructions and send back
 			}
 
-			if(command == 'lightsOn') {
+			if(command == 'lightson') {
 				var jsonBody = { 
 					'id' : 'farmerserver',
 					'cmd' : 'lightson',
 					'data' : {}
 				};
-
+				console.log("sending lights on to PI");
+				console.log(jsonBody);
 				PostMessage(jsonBody, raspPiEndpoint);
 			}
 
-			if(command == 'lightsOff') {
+			if(command == 'lightsoff') {
 				var jsonBody = { 
 					'id' : 'farmerserver',
-					'cmd' : 'lightsoff',
+					'cmd' : command,
 					'data' : {}
 				};
 
