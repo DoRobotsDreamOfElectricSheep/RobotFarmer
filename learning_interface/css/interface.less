@@ -9,13 +9,16 @@ body {
 #roadmap {
     background: yellow;
     width: 14%;
+
+    ul {
+        margin: 0;
+    }
 }
     #progress {
         background-color: cyan;
     }
 
 #main {
-    background: purple;
     position: relative;
     width: 55%;
 }
@@ -48,9 +51,32 @@ body {
 }
 
 #instructor {
-    background: blue;
     height: 40%;
+
+    h2, p {
+        margin: 0;
+        height: 9%;
+    }
 }
+    #instructor-slides{
+         height: 90%;
+         padding: 3px 8px;
+         border: 2px dotted #ccc;
+    }
+    .lesson {
+        display: none;
+        font-size: 107%;
+        line-height: 130%; 
+    }
+
+    .code {
+        padding: 5px;
+        font-family: Consolas,Menlo,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New,monospace,serif;
+        margin-bottom: 10px;
+        background-color: #eee;
+        overflow: auto;
+        max-height: 600px;
+    }
 
 #editor {
     background-color: black;
@@ -63,4 +89,10 @@ body {
     bottom: 0px;
     position: absolute;
     right: 10px;
+}
+
+
+/* jquery ui overrides*/
+.ui-accordion .ui-accordion-content {
+    padding: 10px 0;
 }

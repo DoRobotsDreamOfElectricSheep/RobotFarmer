@@ -45,9 +45,18 @@ var robotFarmer = (function () {
     function CreateRobotFarmer() {
         ConsoleMessage("Robot Farmer Created!");
         return {
-            lightsOn: function () { PostMessage("{sender: 'student', message: 'lightsOn'}", 'lights on') },
+            lightsOn: TurnLightsOn,
+            lightsOff: TurnLightsOff,
             status: function () { console.log(status.lightsOn); }
         };
+    }
+
+    function TurnLightsOn(pos, timer) {
+        PostMessage("{id: 'student', cmd: 'lightsOn', data: { pos:" + pos + " , timer:" + timer + "} }", 'lights on');
+    }
+
+    function TurnLightsOff(pos, timer) {
+        PostMessage("{id: 'student', cmd: 'lightsOff', data: { pos:" + pos + " , timer:" + timer + "} }", 'lights off');
     }
 
     return {

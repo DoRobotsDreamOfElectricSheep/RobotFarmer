@@ -30,14 +30,15 @@ var server = http.createServer(function(req, res) {
 			}
 
 			if(command == 'lightson') {
-				//TODO; turn lights on
+				TurnLightsOn();
 			}
 
 			if(command == 'lightsoff') {
-				//TODO; turn lights off
+				TurnLightsOff();
 			}
 
 		});
+	}
 
 	res.end('message recieved');
 	console.log("Server visited");
@@ -50,6 +51,22 @@ function TakePicture() {
 	pythonShell.run('capture_image.py',{scriptPath: './'}, function(err) 
 	{ 
 		if(err) console.log('capture error');
+	});
+}
+
+function TurnLightsOn() {
+	gpio.open(16, "output", function(err) {
+		gpio.write(16, 1, function() {
+			gpio.close(16);
+		});
+	});
+}
+
+function TurnLightsOff() {
+	gpio.open(16, "output", function(err) {
+		gpio.write(16, 0, function() {
+			gpio.close(16);
+		});
 	});
 }
 
