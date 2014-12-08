@@ -9,49 +9,80 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="learning_interface/css/site.min.css">
-        <script src="learning_interface/js/vendor/modernizr-2.6.2.min.js"></script>
+        <link rel="stylesheet" href="http://robotfarmer.student12345.netdna-cdn.com/jquery_ui/jquery-ui.min.css">
+        <link rel="stylesheet" href="http://robotfarmer.student12345.netdna-cdn.com/site.min.css">
+        <script src="http://robotfarmer.student12345.netdna-cdn.com/vendor/modernizr-2.6.2.min.js"></script>
+
     </head>
-    <body class="clearfix">
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-
-        <div id="roadmap" class="col">
-            <ul id="progress">
-                <li class="goal"></li>
-                <li class="goal"></li>
-                <li class="goal"></li>
-                <li class="goal"></li>
-                <li class="goal"></li>
-            </ul>
-        </div>
-        <div id="main" class="col">
-            <div id="instructor"></div>
-                <textarea id="editor" rows="18" cols="78"></textarea>
-                <div id="run" class="btn">Run</div>
-            </div>
-        </div>
-        <div id="console" class="col">
-            <div id="camera"></div>
-            <div id="console-output"></div>
-        </div>
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
-        <script src="learning_interface/js/plugins.js"></script>
-        <script src="learning_interface/js/RobotFarmer.js"></script>
-        <script src="learning_interface/js/Teacher.js"></script>
-        <script src="learning_interface/js/Interface.js"></script>
-
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
-        </script>
-    </body>
+                       <body class="clearfix">
+                           <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+                           <div id="roadmap" class="col">
+                               <div class="accordian" id="progress">
+                                   <h3>Lesson 1</h3>
+                                   <div>
+                                       <ul id="lesson1-progress">
+                                           <li class="goal" id="Lesson1A">Lesson 1A</li>
+                                           <li class="goal" id="Lesson1B">Lesson 1B</li>
+                                           <li class="goal" id="Lesson1C">Lesson 1C</li>
+                                           <li class="goal" id="Lesson1D">Lesson 1D</li>
+                                           <li class="goal" id="Lesson1E">Lesson 1E</li>
+                                       </ul>
+                                   </div>
+                                   <h3>Lesson 2</h3>
+                                   <div>
+                                       <ul id="lesson2-progress">
+                                           <li class="goal" id="Lesso2A">Lesson 2A</li>
+                                           <li class="goal" id="Lesson2B">Lesson 2B</li>
+                                           <li class="goal" id="Lesson2C">Lesson 2C</li>
+                                           <li class="goal" id="Lesson2D">Lesson 2D</li>
+                                           <li class="goal" id="Lesson2E">Lesson 2E</li>
+                                       </ul>
+                                   </div>
+                                   <h3>Lesson 3</h3>
+                                   <div>
+                                       <ul id="lesson2-progress">
+                                           <li class="goal" id="Lesso3A">Lesson 3A</li>
+                                           <li class="goal" id="Lesson3B">Lesson 3B</li>
+                                           <li class="goal" id="Lesson3C">Lesson 3C</li>
+                                           <li class="goal" id="Lesson3D">Lesson 3D</li>
+                                           <li class="goal" id="Lesson3E">Lesson 3E</li>
+                                       </ul>
+                                   </div>
+                               </div>
+                           </div>
+                           <div id="main" class="col">
+                               <div id="instructor">
+                                   <h2 id="lesson-title">Lesson 1A</h2>
+                                   <div id="instructor-slides">
+                                      <!--LOAD LESSONS--> 
+                                   </div>
+                               </div>
+                               <textarea id="editor" rows="18" cols="78"></textarea>
+                               <div id="run" class="btn">Run</div>
+                           </div>
+                           <div id="console" class="col">
+                               <img id="camera" src="">
+                               <div id="console-output"></div>
+                           </div>
+                           <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+                           <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+                           <script src="http://robotfarmer.student12345.netdna-cdn.com/jquery_ui/jquery-ui.min.js"></script>
+                           <script src="http://robotfarmer.student12345.netdna-cdn.com/plugins.js"></script>
+                           <script src="http://robotfarmer.student12345.netdna-cdn.com/RobotFarmer.js"></script>
+                           <script src="http://robotfarmer.student12345.netdna-cdn.com/Teacher.js"></script>
+                           <script src="http://robotfarmer.student12345.netdna-cdn.com/Interface.js"></script>
+                           <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+                           <script>
+                               (function (b, o, i, l, e, r) {
+                                   b.GoogleAnalyticsObject = l; b[l] || (b[l] =
+                                   function () { (b[l].q = b[l].q || []).push(arguments) }); b[l].l = +new Date;
+                                   e = o.createElement(i); r = o.getElementsByTagName(i)[0];
+                                   e.src = '//www.google-analytics.com/analytics.js';
+                                   r.parentNode.insertBefore(e, r)
+                               }(window, document, 'script', 'ga'));
+                               ga('create', 'UA-XXXXX-X'); ga('send', 'pageview');
+                           </script>
+                       </body>
 </html>

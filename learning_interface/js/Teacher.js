@@ -45,6 +45,7 @@ var Teacher = (function () {
     }
 //LESSONS 1--------------------------------------------------------------------------------------------------------
     function LightsOnLesson(lessonCompleteCallback) {
+        $('#instructor-slides').load('http://robotfarmer.student12345.netdna-cdn.com/lessons.html .Lesson1A');
         var orig_lightsOn = shimmedRobotFarmer.lightsOn;
         shimmedRobotFarmer.lightsOn = function () {
             orig_lightsOn();
