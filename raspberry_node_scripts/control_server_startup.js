@@ -1,6 +1,9 @@
 var http = require('http');
 var request = require('request');
 var pythonShell = require('python-shell');
+var gpio = require('pi-gpio');
+
+var farmerServerEndpoint = 'http://192.168.1.2:3000';
 
 var server = http.createServer(function(req, res) {
 	
@@ -20,12 +23,6 @@ var server = http.createServer(function(req, res) {
 
 			if(command == 'takepicture') {
 				TakePicture();
-				var jsonBody = {
-					'id' : 'rasppi',
-					'cmd' : 'picturetaken',
-					'data' : {}
-				};
-				PostMessage(jsonBody, 'http://192.168.1.2:3000');
 				console.log('POST: picture taken');
 			}
 
@@ -35,6 +32,14 @@ var server = http.createServer(function(req, res) {
 
 			if(command == 'lightsoff') {
 				TurnLightsOff();
+			}
+
+			if(command == 'wateron') {
+				TurnPumpOn();
+			}
+
+			if(command == 'wateroff') {
+				TurnPumpOff();
 			}
 
 		});
@@ -48,9 +53,16 @@ server.listen(4000, '0.0.0.0');
 console.log('NodeJS running on Raspberry Pi');
 
 function TakePicture() {
-	pythonShell.run('capture_image.py',{scriptPath: './'}, function(err) 
+	pythonShell.run('capture_image.py',{scriptPath: './'}, function(err, result) 
 	{ 
 		if(err) console.log('capture error');
+
+		var jsonBody = {
+			'id' : 'raspi',
+			'cmd' : 'capturecomplete'
+		}
+
+		PostMessage(jsonBody, farmerServerEndpoint);
 	});
 }
 
@@ -58,6 +70,14 @@ function TurnLightsOn() {
 	gpio.open(16, "output", function(err) {
 		gpio.write(16, 1, function() {
 			gpio.close(16);
+			var jsonBody = {
+				'cmd' : 'updatestatus',
+				'data' : {
+					'control' : 'light_status',
+					'value' : true
+				}
+			}
+			PostMessage(jsonBody, farmerServerEndpoint);
 		});
 	});
 }
@@ -66,6 +86,46 @@ function TurnLightsOff() {
 	gpio.open(16, "output", function(err) {
 		gpio.write(16, 0, function() {
 			gpio.close(16);
+			var jsonBody = {
+				'cmd' : 'updatestatus',
+				'data' : {
+					'control' : 'light_status',
+					'value' : false
+				}
+			}
+			PostMessage(jsonBody, farmerServerEndpoint);
+		});
+	});
+}
+
+function TurnPumpOn() {
+	gpio.open(7, "output", function(err) {
+		gpio.write(7, 0, function() {
+			gpio.close(7);
+			var jsonBody = {
+				'cmd' : 'updatestatus',
+				'data' : {
+					'control' : 'water_status',
+					'value' : true
+				}
+			}
+			PostMessage(jsonBody, farmerServerEndpoint);
+		});
+	});
+}
+
+function TurnPumpOff() {
+	gpio.open(7, "output", function(err) {
+		gpio.write(7, 1, function() {
+			gpio.close(7);
+			var jsonBody = {
+				'cmd' : 'updatestatus',
+				'data' : {
+					'control' : 'water_status',
+					'value' : false
+				}
+			}
+			PostMessage(jsonBody, farmerServerEndpoint);
 		});
 	});
 }
