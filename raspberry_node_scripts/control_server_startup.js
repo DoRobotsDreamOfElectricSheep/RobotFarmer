@@ -32,6 +32,14 @@ var server = http.createServer(function(req, res) {
 				TurnLightsOff();
 			}
 
+			if(command == 'wateron') {
+				TurnPumpOn();
+			}
+
+			if(command == 'wateroff') {
+				TurnPumpOff();
+			}
+
 		});
 	}
 
@@ -68,6 +76,22 @@ function TurnLightsOff() {
 	gpio.open(16, "output", function(err) {
 		gpio.write(16, 0, function() {
 			gpio.close(16);
+		});
+	});
+}
+
+function TurnPumpOn() {
+	gpio.open(7, "output", function(err) {
+		gpio.write(7, 0, function() {
+			gpio.close(7);
+		});
+	});
+}
+
+function TurnPumpOff() {
+	gpio.open(7, "output", function(err) {
+		gpio.write(7, 1, function() {
+			gpio.close(7);
 		});
 	});
 }
