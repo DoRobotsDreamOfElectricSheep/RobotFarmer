@@ -3,6 +3,8 @@ var request = require('request');
 var pythonShell = require('python-shell');
 var gpio = require('pi-gpio');
 
+var farmerServerEndpoint = 'http://192.168.1.2:3000';
+
 var server = http.createServer(function(req, res) {
 	
 	var command = '';
@@ -55,12 +57,12 @@ function TakePicture() {
 	{ 
 		if(err) console.log('capture error');
 
-		var jsonBody {
+		var jsonBody = {
 			'id' : 'raspi',
 			'cmd' : 'capturecomplete'
 		}
 
-		PostMessage(jsonBody, 'http://192.168.1.2:3000');
+		PostMessage(jsonBody, farmerServerEndpoint);
 	});
 }
 
@@ -68,6 +70,14 @@ function TurnLightsOn() {
 	gpio.open(16, "output", function(err) {
 		gpio.write(16, 1, function() {
 			gpio.close(16);
+			var jsonBody = {
+				'cmd' : 'updatestatus',
+				'data' : {
+					'control' : 'light_status',
+					'value' : true
+				}
+			}
+			PostMessage(jsonBody, farmerServerEndpoint);
 		});
 	});
 }
@@ -76,6 +86,14 @@ function TurnLightsOff() {
 	gpio.open(16, "output", function(err) {
 		gpio.write(16, 0, function() {
 			gpio.close(16);
+			var jsonBody = {
+				'cmd' : 'updatestatus',
+				'data' : {
+					'control' : 'light_status',
+					'value' : false
+				}
+			}
+			PostMessage(jsonBody, farmerServerEndpoint);
 		});
 	});
 }
@@ -84,6 +102,14 @@ function TurnPumpOn() {
 	gpio.open(7, "output", function(err) {
 		gpio.write(7, 0, function() {
 			gpio.close(7);
+			var jsonBody = {
+				'cmd' : 'updatestatus',
+				'data' : {
+					'control' : 'water_status',
+					'value' : true
+				}
+			}
+			PostMessage(jsonBody, farmerServerEndpoint);
 		});
 	});
 }
@@ -92,6 +118,14 @@ function TurnPumpOff() {
 	gpio.open(7, "output", function(err) {
 		gpio.write(7, 1, function() {
 			gpio.close(7);
+			var jsonBody = {
+				'cmd' : 'updatestatus',
+				'data' : {
+					'control' : 'water_status',
+					'value' : false
+				}
+			}
+			PostMessage(jsonBody, farmerServerEndpoint);
 		});
 	});
 }

@@ -8,10 +8,14 @@ var raspPiEndpoint = 'http://192.168.1.3:4000';
 var selectedColor;
 var latestImageName;
 
+var status = {
+	'imageUrl' : null,
+	'waterOn' : false,
+	'lightOn' : false
+};
+
 var server = http.createServer(function(req, res) {
 	res.writeHead(200,{'Access-Control-Allow-Origin':'*', 'Content-Type':'text/plain'});
-	//res.header('Access-Control-Allow-Origin', 'GET,PUT,POST,DELETE');
-	//res.header('Access-Control-Allow-Origin', 'Content-Type, Authorization');
 
 	var command = '';
 	var post;
@@ -38,53 +42,43 @@ var server = http.createServer(function(req, res) {
 				console.log("COLOR SET TO: " + selectedColor);
 			}
 
-			if(command == 'takepicture') {
-				var jsonBody = { 
-					'id' : 'farmerserver',
-					'cmd' : 'takepicture',
-					'data' : {}
-				};
-				console.log("sending take picture cmd to PI");
-				console.log(jsonBody);
-				PostMessage(jsonBody, raspPiEndpoint);
-			}
-
-
 			if(command == 'capturecomplete') {
 				latestImageName = 'capture_' + Date.now() + '.jpg';
 				console.log('download image ' + latestImageName + ' ...');
 				downloadImage('http://192.168.1.3:8080/arm_image.jpg', 'pi_pictures/' + latestImageName, function() {
 					console.log('done');
 					console.log("pocessing image now...");
+					status.imageUrl = 'http://192.168.1.2:8080/' + latestImageName;
 					//image.processImage('strawberry_initial.jpg', selectedColor);
 				});
 				
 				//TODO: process picture, generate instructions and send back
 			}
 
-			if(command == 'lightson') {
-				var jsonBody = { 
-					'id' : 'farmerserver',
-					'cmd' : 'lightson',
-					'data' : {}
-				};
-				console.log("sending lights on to PI");
-				console.log(jsonBody);
-				PostMessage(jsonBody, raspPiEndpoint);
-			}
-
-			if(command == 'lightsoff') {
+			if(command == 'wateron' || command == 'wateroff' || 
+				command == 'lightsoff' || command == 'lightson' || command == 'takepicture') {
 				var jsonBody = { 
 					'id' : 'farmerserver',
 					'cmd' : command,
 					'data' : {}
 				};
 
+				console.log("BODY: " + jsonBody);
 				PostMessage(jsonBody, raspPiEndpoint);
 			}
 
-			if(command == 'cameraimageurl') {
-				res.end('http://192.168.1.2:8080/' + latestImageName);
+			if(command == 'updatestatus') {
+				switch(post.data.control) {
+					case 'water_status': status.waterOn = post.data.value;
+										 break;
+					case 'light_status': status.lightson = post.data.value;
+										 break;
+					default: console.log('invalid control status');
+				}
+			}
+
+			if(command == 'status') {
+				res.end(status);
 			}
 		});
 	}
