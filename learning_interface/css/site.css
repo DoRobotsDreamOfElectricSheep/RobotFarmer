@@ -714,11 +714,12 @@ body {
   padding: 0 10px;
 }
 .col > div,
-.col > ul {
+.col > ul,
+.col > img {
   margin: 10px auto;
 }
 #camera {
-  background: red;
+  display: block;
   height: 300px;
   width: 300px;
 }

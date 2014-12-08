@@ -1,12 +1,13 @@
 var robotFarmer = (function () {
 
     var serverUrl = "http://192.168.1.2:3000",
-        $console = $('#console-output');
+        $console = $('#console-output'),
+        $camera = $('#camera');
 
     var status = {
         lightsOn: false,
         waterOn: false,
-        pictureTimeStamp: 0
+        cameraImageUrl: ''
     }
     
     function ConsoleMessage(message, type) {
@@ -36,7 +37,7 @@ var robotFarmer = (function () {
             type: 'POST',
             url: serverUrl,
             data: JSON.stringify(messageToSend),
-            success: function () { console.log(displayMessage, 'sent'); },
+            success: function () { ConsoleMessage(displayMessage, 'sent'); },
             error: HandleAjaxError
         })
     }
@@ -45,11 +46,8 @@ var robotFarmer = (function () {
         $.ajax({
             type: 'POST',
             url: serverUrl,
-            contentType: "application/json; charset=utf-8",
             data: JSON.stringify(messageToSend),
-            dataType: 'json',
             success: function (data) {
-                console.log(displayMessage, 'sent');
                 sucessCallback(data);
             },
             error: HandleAjaxError
@@ -58,7 +56,7 @@ var robotFarmer = (function () {
 
     function CreateRobotFarmer() {
         ConsoleMessage("Robot Farmer Created!");
-        PollForImageTimeStamp();
+        PollCameraImageUrl();
 
         return {
             lightsOn: TurnLightsOn,
@@ -80,16 +78,18 @@ var robotFarmer = (function () {
         PostMessage({ id: 'student', cmd: 'takepicture'}, 'picture taken');
     }
 
-    function PollForImageTimeStamp() {
+    function PollCameraImageUrl() {
         setTimeout(function () {
-            PostMessage({ id: 'student', cmd: 'lastPictureTaken' }, function (data) { 
-                if (data) {
-                    status.pictureTimeStamp = data;
-
+            GetMessage({ id: 'student', cmd: 'cameraImageUrl' }, function (url) { 
+                if (url) {
+                    if (status.cameraImageUrl != url) {
+                        status.cameraImageUrl = url;
+                        $camera.attr('src', url);
+                    };
                 }
             });
-            PollForPictureTimeStamp();
-        }, 3000);
+            PollCameraImageUrl();
+        }, 1000);
     }
 
     //function UpdatePicture

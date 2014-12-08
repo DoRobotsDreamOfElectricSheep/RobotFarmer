@@ -19,8 +19,6 @@ $(function () {
         $(this).css("background-color", "#3498db");
     });
 
-    
-
     $('#run').click(function () {
         var codeToRun = $('#editor').val();
         try {
