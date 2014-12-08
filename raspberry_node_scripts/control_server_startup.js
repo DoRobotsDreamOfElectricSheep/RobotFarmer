@@ -21,12 +21,6 @@ var server = http.createServer(function(req, res) {
 
 			if(command == 'takepicture') {
 				TakePicture();
-				var jsonBody = {
-					'id' : 'rasppi',
-					'cmd' : 'picturetaken',
-					'data' : {}
-				};
-				PostMessage(jsonBody, 'http://192.168.1.2:3000');
 				console.log('POST: picture taken');
 			}
 
@@ -49,9 +43,16 @@ server.listen(4000, '0.0.0.0');
 console.log('NodeJS running on Raspberry Pi');
 
 function TakePicture() {
-	pythonShell.run('capture_image.py',{scriptPath: './'}, function(err) 
+	pythonShell.run('capture_image.py',{scriptPath: './'}, function(err, result) 
 	{ 
 		if(err) console.log('capture error');
+
+		var jsonBody {
+			'id' : 'raspi',
+			'cmd' : 'capturecomplete'
+		}
+
+		PostMessage(jsonBody, 'http://192.168.1.2:3000');
 	});
 }
 
