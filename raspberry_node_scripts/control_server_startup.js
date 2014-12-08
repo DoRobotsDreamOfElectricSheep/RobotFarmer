@@ -1,6 +1,7 @@
 var http = require('http');
 var request = require('request');
 var pythonShell = require('python-shell');
+var gpio = require('pi-gpio');
 
 var server = http.createServer(function(req, res) {
 	
