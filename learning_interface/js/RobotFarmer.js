@@ -1,6 +1,6 @@
 var robotFarmer = (function () {
 
-    var serverUrl = "http://192.168.1.2:3000",
+    var serverUrl = "http://aunwin.koding.io:3000",
         $console = $('#console-output'),
         $camera = $('#camera');
 
@@ -80,9 +80,9 @@ var robotFarmer = (function () {
 
     function PollCameraImageUrl() {
         setTimeout(function () {
-            GetMessage({ id: 'student', cmd: 'cameraImageUrl' }, function (url) { 
-                if (url) {
-                    if (status.cameraImageUrl != url) {
+            GetMessage({ id: 'student', cmd: 'cameraImageUrl' }, function (data) { 
+                if (data) {
+                    if (status.cameraImageUrl != data.imageUrl) {
                         status.cameraImageUrl = url;
                         $camera.attr('src', url);
                     };
