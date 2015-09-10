@@ -1,0 +1,14 @@
+{
+  "name": "codeship",
+  "version": "0.0.0",
+  "description": "codeship",
+  "main": "app.js",
+  "author": {
+    "name": "anishik",
+    "email": ""
+  },
+  "dependencies": {
+    "should": "^7.1.0",
+    "sinon": "^1.16.1"
+  }
+}
