@@ -1,6 +1,6 @@
 var robotFarmer = (function () {
 
-    var serverUrl = "http://aunwin.koding.io:3000",
+    var serverUrl = "http://54.149.10.240:3000",
         $console = $('#console-output'),
         $camera = $('#camera');
 
@@ -61,6 +61,8 @@ var robotFarmer = (function () {
         return {
             lightsOn: TurnLightsOn,
             lightsOff: TurnLightsOff,
+            waterOn: TurnWaterOn,
+            waterOff: TurnWaterOff,
             takePicture: TakeArmPicture,
             status: function () { console.log(status.lightsOn); }
         };
@@ -74,22 +76,31 @@ var robotFarmer = (function () {
         PostMessage({ id: 'student', cmd: 'lightsOff', data: { pos: pos, timer: timer } }, 'lights off');
     }
 
+    function TurnWaterOn(pos, timer) {
+        PostMessage({ id: 'student', cmd: 'waterOn', data: { pos: pos, timer: timer } }, 'water on');
+    }
+
+    function TurnWaterOff(pos, timer) {
+        PostMessage({ id: 'student', cmd: 'waterOff', data: { pos: pos, timer: timer } }, 'water off');
+    }
+
     function TakeArmPicture() {
         PostMessage({ id: 'student', cmd: 'takepicture'}, 'picture taken');
     }
 
     function PollCameraImageUrl() {
         setTimeout(function () {
-            GetMessage({ id: 'student', cmd: 'cameraImageUrl' }, function (data) { 
+            GetMessage({ id: 'student', cmd: 'status' }, function (data) { 
                 if (data) {
-                    if (status.cameraImageUrl != data.imageUrl) {
-                        status.cameraImageUrl = url;
-                        $camera.attr('src', url);
+                    var serverStatus = JSON.parse(data);
+                    if (status.cameraImageUrl != serverStatus.imageUrl) {
+                        status.cameraImageUrl = serverStatus.imageUrl;
+                        $camera.attr('src', serverStatus.imageUrl);
                     };
                 }
             });
             PollCameraImageUrl();
-        }, 1000);
+        }, 3000);
     }
 
     //function UpdatePicture

@@ -13,8 +13,6 @@ $(function () {
         var lessonId = $(this).attr('id');
         teacher[lessonId]();
 
-        $instructorSlides.find('.lesson').hide();
-        $instructorSlides.find('.' + lessonId).show()
         $progress.find('li').css("background-color", "rgba(0, 0, 0, 0)");
         $(this).css("background-color", "#3498db");
     });

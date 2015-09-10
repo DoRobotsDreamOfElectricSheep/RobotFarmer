@@ -51,8 +51,8 @@ var Teacher = (function () {
             description:
                 '<div class="Lesson1A lesson">'
                     + "<p>The plants are probably hungry for some sun, so let's begin by having some fun.</p>"
-                    + '<p>Create a Robot Farmer and store it in a variable.  The variable name can be anything you want ex: myRobotFarmer, alexsRobotFarmer, etc, but it can not be named robotFarmer</p>'
-                    + '<div class="code">var myRobotFarmer = robotFarmer.Create();</div>'
+                    + '<p>Create a Robot Farmer and store it in a variable.  The variable name can be anything you want ex: myRobotFarmer, alexsRobotFarmer, etc, but it can not be named robotFarmer</p><p>#Note: Javascript is case-sensitive'
+                    + '<div class="code">var myRobotFarmer = robotFarmer.create();</div>'
                     + '<p>Now turn the farm uv lights on</p>'
                     + '<div class="code">myRobotFarmer.lightsOn();</div>'
                     + '<p>Type the two lines of code above into the editor below...then click run.</p>'
@@ -67,13 +67,13 @@ var Teacher = (function () {
         }
     })();
 
-    function LightsOffLesson(lessonCompleteCallback) {
+    var LightsOffLesson = (function () {
         return {
             description:
                 '<div class="Lesson1B lesson">'
                     + "<p>That was easy, now lets try turning those lights back off</p>"
                     + '<p>Create a Robot Farmer and store it in a variable.  The variable name can be anything you want ex: myRobotFarmer, alexsRobotFarmer, etc, but it can not be named robotFarmer</p>'
-                    + '<div class="code">var myRobotFarmer = robotFarmer.Create();</div>'
+                    + '<div class="code">var myRobotFarmer = robotFarmer.create();</div>'
                     + '<p>Now turn the farm lights off</p>'
                     + '<div class="code">myRobotFarmer.lightsOff();</div>'
                     + '<p>Type the two lines of code above into the editor below...then click run.</p>'
@@ -86,23 +86,46 @@ var Teacher = (function () {
                 };
             }
         }
-    };
+    })();
 
-    function WaterOnLesson(lessonCompleteCallback) {
-        var orig_waterOn = shimmedRobotFarmer.waterOn;
-        shimmedRobotFarmer.waterOn = function () {
-            orig_waterOn();
-            lessonCompleteCallback();
-        };
-    }
+    var WaterOnLesson = (function () {
+        return {
+            description:
+                '<div class="Lesson1C lesson">'
+                    + "<p>Now it's time to turn the water on.</p>"
+                    + '<p>So create a Robot Farmer like before and then call its waterOn() function</p>'
+                    + '<div class="code">myRobotFarmer.waterOn();</div>'
+                + '</div>',
+            start: function (lessonCompleteCallback) {
+                var orig_waterOn = shimmedRobotFarmer.waterOn;
+                shimmedRobotFarmer.waterOn = function () {
+                    orig_waterOn();
+                    lessonCompleteCallback();
+                };
+            }
+        }
+    })();
 
-    function WaterOffLesson(lessonCompleteCallback) {
-        var orig_waterOff = shimmedRobotFarmer.waterOff;
-        shimmedRobotFarmer.waterOff = function () {
-            orig_waterOff();
-            lessonCompleteCallback();
-        };
-    }
+    var WaterOffLesson = (function () {
+        return {
+            description:
+                '<div class="Lesson1B lesson">'
+                    + "<p>That was easy, now lets try turning those lights back off</p>"
+                    + '<p>Create a Robot Farmer and store it in a variable.  The variable name can be anything you want ex: myRobotFarmer, alexsRobotFarmer, etc, but it can not be named robotFarmer</p>'
+                    + '<div class="code">var myRobotFarmer = robotFarmer.Create();</div>'
+                    + '<p>Now turn the farm lights off</p>'
+                    + '<div class="code">myRobotFarmer.lightsOff();</div>'
+                    + '<p>Type the two lines of code above into the editor below...then click run.</p>'
+                + '</div>',
+            start: function (lessonCompleteCallback) {
+                var orig_waterOff = shimmedRobotFarmer.waterOff;
+                shimmedRobotFarmer.waterOff = function () {
+                    orig_waterOff();
+                    lessonCompleteCallback();
+                }; 
+            }
+        }
+    })();
 
     function TakeDarkPictureLesson(lessonCompleteCallback) {
         var orig_takePic = shimmedRobotFarmer.takePicture;
