@@ -8,4 +8,6 @@ RUN apt-get install -y nodejs npm
 RUN mkdir -p /robot
 WORKDIR /robot
 
-COPY . cronfile
+COPY cronfile
+
+RUN crontab -u root /robot/cronfile/cronfile
