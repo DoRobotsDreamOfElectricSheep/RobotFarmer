@@ -5,4 +5,5 @@ RUN apt-get update
 
 RUN apt-get install -y nodejs npm 
 
-MKDIR /robotfarmer
+RUN mkdir -p /robot
+WORKDIR /robot
